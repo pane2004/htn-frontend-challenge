@@ -2,6 +2,7 @@ import Link from "next/link";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
+  children?: React.ReactNode;
 }
 
 interface NavButtonProps {
@@ -11,13 +12,14 @@ interface NavButtonProps {
   children?: React.ReactNode;
 }
 
-export function Button({ label, ...props }: ButtonProps) {
+export function Button({ label, children, ...props }: ButtonProps) {
   return (
     <button
-      className="border border-2 border-white font-medium text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-gradient-to-r from-blue-600 to-cyan-500 hover:brightness-125"
+      className="flex flex-row items-center gap-2 border border-2 border-white font-medium text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-gradient-to-r from-blue-600 to-cyan-500 hover:brightness-125"
       {...props}
     >
       {label}
+      {children}
     </button>
   );
 }
