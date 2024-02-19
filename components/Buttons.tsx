@@ -1,5 +1,14 @@
+import Link from "next/link";
+
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
+}
+
+interface NavButtonProps {
+  label: string;
+  href: string;
+  disabled?: boolean;
+  children?: React.ReactNode;
 }
 
 export function Button({ label, ...props }: ButtonProps) {
@@ -10,5 +19,26 @@ export function Button({ label, ...props }: ButtonProps) {
     >
       {label}
     </button>
+  );
+}
+
+export function NavButton({
+  label,
+  href,
+  disabled,
+  children,
+  ...props
+}: NavButtonProps) {
+  return (
+    <Link
+      href={href}
+      className={`flex items-center p-2 group ${
+        disabled ? "text-gray-500 cursor-default" : "text-white hover:bg-gray-700"
+      }`}
+      {...props}
+    >
+      {children}
+      <span className="ms-3">{label}</span>
+    </Link>
   );
 }

@@ -15,7 +15,7 @@ Specifically for private events:
 - finally sort all the remaining items by start_time
 */
 
-export function processPublicEvents(events: TEvent[]) {
+export function processPublicEvents(events: TEvent[]): TEvent[] {
   const permissionMap = new Map(
     events.map((event) => [event.id, event.permission])
   );
