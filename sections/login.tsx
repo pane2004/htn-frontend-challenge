@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { useLogin } from "@/hooks/useLogin";
-import { Gear, Square, Star } from "@/components/decorations/icons";
-import { Button } from "@/components/buttons";
-import { TextInput } from "@/components/input";
+import { Gear, Square, Star } from "@/components/decorations/Icons";
+import { Button } from "@/components/Buttons";
+import { TextInput } from "@/components/Input";
 import { H1, H3 } from "@/components/Text";
 
 const sora = Sora({ subsets: ["latin"] });
