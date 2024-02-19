@@ -15,15 +15,28 @@ export function H1({ glow, children, ...props }: TextProps) {
   );
 }
 
-export function H3({ glow, children, ...props }: TextProps) {
+export function H2({ glow, children, ...props }: TextProps) {
   return (
-    <h1
-      className={`font-medium sm:text-2xl text-xl ${
+    <h2
+      className={`font-bold sm:text-4xl text-2xl ${
         glow ? "text-shadow shadow-fuchsia-400 hover:brightness-150" : ""
       }`}
       {...props}
     >
       {children}
-    </h1>
+    </h2>
+  );
+}
+
+export function H3({ glow, children, ...props }: TextProps) {
+  return (
+    <h3
+      className={`font-medium md:text-2xl text-xl ${
+        glow ? "text-shadow shadow-fuchsia-400 hover:brightness-150" : ""
+      }`}
+      {...props}
+    >
+      {children}
+    </h3>
   );
 }
