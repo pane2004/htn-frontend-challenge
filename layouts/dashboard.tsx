@@ -97,7 +97,7 @@ export function DashboardLayout({
           </div>
         </aside>
         <div
-          className={`${menu ? "col-span-12" : "sm:col-span-9 col-span-12"}`}
+          className={`${menu ? "col-span-12" : "sm:col-span-9 col-span-12"} max-h-screen overflow-y-auto`}
         >
           {children}
         </div>
