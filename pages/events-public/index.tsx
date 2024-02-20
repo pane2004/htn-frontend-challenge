@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 import { createApolloClient } from "@/client/client";
-import { TEvent, TEventType } from "@/types/events";
+import { EventsProps, TEvent, TEventType } from "@/types/events";
 import { processPublicEvents, searchEvents } from "@/utils/eventClean";
 import { DashboardLayout } from "@/layouts/dashboard";
 import { ReactElement, useEffect, useState } from "react";
@@ -11,13 +11,6 @@ import { Modal } from "@/components/Modal";
 import { EVENT_TYPES } from "@/constants/filters";
 import { SearchBar } from "@/components/SearchBar";
 import { FilterAccordion } from "@/components/Buttons";
-
-interface EventsProps {
-  events: TEvent[];
-  eventsMap: {
-    [k: string]: string;
-  }; // events map for relation display
-}
 
 export default function EventsPublic({ events, eventsMap }: EventsProps) {
   const router = useRouter();

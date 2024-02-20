@@ -26,3 +26,10 @@ export type TEvent = {
 
 // What the endpoints will return
 export type TEndpointResponse = TEvent | TEvent[];
+
+export interface EventsProps {
+  events: TEvent[];
+  eventsMap: {
+    [k: string]: string;
+  }; // events map for relation display
+}
