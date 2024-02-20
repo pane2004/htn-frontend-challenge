@@ -7,18 +7,31 @@ import { Gear, Square, Star } from "@/components/decorations/Icons";
 import { Button } from "@/components/Buttons";
 import { TextInput } from "@/components/Input";
 import { H1, H3 } from "@/components/Text";
+import { toErrorWithMessage } from "@/utils/error";
 
 const sora = Sora({ subsets: ["latin"] });
 
 export function LoginPage() {
   const router = useRouter();
-  const { error, login } = useLogin();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { loading, login } = useLogin();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(email, password).then(() => router.push("/events-private"));
+    setErrorMessage("");
+
+    login(email, password)
+      .then(() => {
+        router.push("/events-private");
+      })
+      .catch((error) => {
+        const message =
+          toErrorWithMessage(error)?.message ||
+          "Login failed. Please try again.";
+        setErrorMessage(message);
+      });
   };
 
   return (
@@ -39,7 +52,10 @@ export function LoginPage() {
               placeholder="name@email.com"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setErrorMessage("");
+              }}
             />
           </div>
           <div className="mb-5">
@@ -50,17 +66,17 @@ export function LoginPage() {
               placeholder="password"
               required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="flex md:flex-row flex-col gap-4">
-            <Button
-              label="Sign In"
-              type="submit"
-              onClick={() => {
-                router.push("/events-private");
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrorMessage("");
               }}
             />
+          </div>
+          {errorMessage && (
+            <div className="mb-4 text-center text-red-500">{errorMessage}</div>
+          )}
+          <div className="flex md:flex-row flex-col gap-4">
+            <Button label="Sign In" type="submit" />
             <Button
               label="Continue as Guest"
               type="button"
