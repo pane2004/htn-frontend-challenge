@@ -1,5 +1,6 @@
 import { NavButton } from "@/components/Buttons";
 import { H1, H2, H3 } from "@/components/Text";
+import { useLogout } from "@/hooks/useLogout";
 import { Sora } from "next/font/google";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
@@ -18,6 +19,7 @@ export function DashboardLayout({
 }: React.HTMLAttributes<HTMLBodyElement>) {
   const [menu, setMenu] = useState(false);
   const router = useRouter();
+  const { loading, error, logout } = useLogout();
   const isPublic: boolean = useMemo(() => {
     if (router.asPath) {
       return router.asPath.includes("events-public");
@@ -74,13 +76,20 @@ export function DashboardLayout({
               </div>
               <ul className="space-y-2 font-medium">
                 <li>
-                  <NavButton href="/events-public" label="Events">
+                  <NavButton
+                    onClick={() => {
+                      router.push(isPublic ? "/events-public" : "/events-private");
+                    }}
+                    label="Events"
+                  >
                     <MdDashboard size={32} />
                   </NavButton>
                 </li>
                 <li>
                   <NavButton
-                    href={isPublic ? "" : "/events-private/my"}
+                    onClick={() => {
+                      router.push(isPublic ? "" : "/events-private/my");
+                    }}
                     label="My Events"
                     disabled={isPublic}
                   >
@@ -89,15 +98,26 @@ export function DashboardLayout({
                 </li>
               </ul>
             </div>
-            <div className="p-4 mb-8">
-              <NavButton href="/" label="Log Out">
+            <div className="w-full p-4 mb-8">
+              <NavButton
+                onClick={() => {
+                  isPublic
+                    ? router.push("/")
+                    : // technically should catch and deal wih logout error
+                      // but for sake of brevity lets skip it
+                      logout().then(() => router.push("/"));
+                }}
+                label="Log Out"
+              >
                 <MdLogout size={32} />
               </NavButton>
             </div>
           </div>
         </aside>
         <div
-          className={`${menu ? "col-span-12" : "sm:col-span-9 col-span-12"} max-h-screen overflow-y-auto`}
+          className={`${
+            menu ? "col-span-12" : "sm:col-span-9 col-span-12"
+          } max-h-screen overflow-y-auto`}
         >
           {children}
         </div>
