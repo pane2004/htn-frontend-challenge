@@ -53,7 +53,7 @@ export function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="sm:space-y-0 sm:space-x-4 space-y-4">
+          <div className="flex md:flex-row flex-col gap-4">
             <Button
               label="Sign In"
               type="submit"
