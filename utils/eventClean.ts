@@ -21,7 +21,7 @@ export function processPublicEvents(events: TEvent[]): TEvent[] {
   );
 
   const processedEvents = events
-    .filter((event) => event.permission === "public")
+    .filter((event) => event?.permission === "public")
     .map((event) => ({
       ...event,
       private_url: "",
@@ -30,6 +30,12 @@ export function processPublicEvents(events: TEvent[]): TEvent[] {
       ),
     }))
     .sort((a, b) => a.start_time - b.start_time);
+
+  return processedEvents;
+}
+
+export function processPrivateEvents(events: TEvent[]): TEvent[] {
+  const processedEvents = [...events].sort((a, b) => a.start_time - b.start_time);
 
   return processedEvents;
 }

@@ -6,7 +6,12 @@ import { formatTimestampRange, formatTimestampToDate } from "@/utils/time";
 import { Button } from "./Buttons";
 import { useRouter } from "next/router";
 
-export function EventsCard({ event }: { event: TEvent }) {
+interface EventsCardProps {
+  event: TEvent;
+  isPublic: boolean;
+}
+
+export function EventsCard({ event, isPublic }: EventsCardProps) {
   return (
     <div className="flex flex-row gap-2 hover:scale-105">
       <div className="hidden md:block">
@@ -20,9 +25,9 @@ export function EventsCard({ event }: { event: TEvent }) {
       <div className="hidden md:block w-4 border-l-2 border-t-2 border-b-2 border-white mr-1" />
 
       <Link
-        href={`/${
-          event?.permission === "private" ? "events-private" : "events-public"
-        }/?eventId=${event.id}`}
+        href={`/${isPublic ? "events-public" : "events-private"}/?eventId=${
+          event.id
+        }`}
         className="flex-grow border-2 border-white max-w-2xl bg-gradient-to-r from-blue-600/10 to-cyan-500/10"
       >
         <div className="flex justify-end items-center h-8 pr-2 space-x-2 border-b-2 border-white bg-gradient-to-r from-blue-600 to-cyan-500">
@@ -33,19 +38,21 @@ export function EventsCard({ event }: { event: TEvent }) {
         <div className="p-8 space-y-4">
           <div className="space-y-2">
             <H3>{event.name}</H3>
-            <div className="flex flex-row items-center gap-1 inline-block">
-              <span>By:</span>
-              <ul>
-                {event.speakers.map((speaker, j) => (
-                  <li
-                    key={`${speaker.name}-${j}`}
-                    className="inline-block mr-2"
-                  >
-                    <span>{speaker.name}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {event.speakers.length > 0 && (
+              <div className="flex flex-row items-center gap-1 inline-block">
+                <span>By:</span>
+                <ul>
+                  {event.speakers.map((speaker, j) => (
+                    <li
+                      key={`${speaker.name}-${j}`}
+                      className="inline-block mr-2"
+                    >
+                      <span>{speaker.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
           <div className="flex flex-col block md:hidden font-bold">
             <span>{formatTimestampToDate(event.start_time)}</span>
@@ -62,6 +69,7 @@ export function EventsCard({ event }: { event: TEvent }) {
 
 interface FullEventCardProps {
   event: TEvent;
+  isPublic: boolean;
   eventsMap?: {
     [k: string]: string;
   };
@@ -71,6 +79,7 @@ interface FullEventCardProps {
 export function EventsCardFull({
   event,
   eventsMap,
+  isPublic,
   onClose,
 }: FullEventCardProps) {
   const router = useRouter();
@@ -90,16 +99,21 @@ export function EventsCardFull({
       <div className="p-8 space-y-8">
         <div className="space-y-2">
           <H2>{event.name}</H2>
-          <div className="flex flex-row items-center gap-2 inline-block">
-            <H3>By:</H3>
-            <ul>
-              {event.speakers.map((speaker, j) => (
-                <li key={`${speaker.name}-${j}`} className="inline-block mr-2">
-                  <H3>{speaker.name}</H3>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {event.speakers.length > 0 && (
+            <div className="flex flex-row items-center gap-2 inline-block">
+              <H3>By:</H3>
+              <ul>
+                {event.speakers.map((speaker, j) => (
+                  <li
+                    key={`${speaker.name}-${j}`}
+                    className="inline-block mr-2"
+                  >
+                    <H3>{speaker.name}</H3>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
         <div className="font-bold">
           <H3>{formatTimestampToDate(event.start_time)}</H3>
@@ -118,7 +132,7 @@ export function EventsCardFull({
                   className="p-2 border border-1 border-gray-200 text-xs text-center bg-gradient-to-r to-orange-500 from-fuchsia-500 hover:brightness-125"
                   onClick={() => {
                     router.push({
-                      pathname: "/events-public",
+                      pathname: isPublic ? "/events-public" : "/events-private",
                       query: { eventId: id },
                     });
                   }}
@@ -131,11 +145,7 @@ export function EventsCardFull({
         )}
         <div>
           <Link
-            href={
-              event?.permission === "private"
-                ? event.private_url
-                : event?.public_url ?? ""
-            }
+            href={isPublic ? event?.public_url ?? "" : event.private_url}
             target="_blank"
           >
             <Button label="Learn More">

@@ -1,93 +1,14 @@
 import { gql } from "@apollo/client";
-
 import { createApolloClient } from "@/client/client";
-import { EventsProps, TEvent, TEventType } from "@/types/events";
-import { processPublicEvents, searchEvents } from "@/utils/eventClean";
+
+import { ReactElement} from "react";
+import { EventsProps, TEvent } from "@/types/events";
+import { processPublicEvents } from "@/utils/eventClean";
 import { DashboardLayout } from "@/layouts/dashboard";
-import { ReactElement, useEffect, useState } from "react";
-import { EventsCard, EventsCardFull } from "@/components/cards";
-import { useRouter } from "next/router";
-import { Modal } from "@/components/Modal";
-import { EVENT_TYPES } from "@/constants/filters";
-import { SearchBar } from "@/components/SearchBar";
-import { FilterAccordion } from "@/components/Buttons";
+import { EventsList } from "@/sections/eventsDisplay";
 
 export default function EventsPublic({ events, eventsMap }: EventsProps) {
-  const router = useRouter();
-  const [selectedEvent, setSelectedEvent] = useState<TEvent>();
-  const [localEvents, setLocalEvents] = useState<TEvent[]>();
-  const [filters, setFilters] = useState<TEventType[]>(EVENT_TYPES);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-
-  const handleSearch = () => {
-    if (localEvents) {
-      setLocalEvents(searchEvents(localEvents, searchQuery));
-    }
-  };
-
-  // handle event selection changes
-  useEffect(() => {
-    if (
-      events &&
-      router.query.eventId &&
-      typeof router.query.eventId === "string" &&
-      /^\d+$/.test(router.query.eventId) // check if can convert to number
-    ) {
-      setSelectedEvent(
-        events.filter((e) => e.id === Number(router.query.eventId))[0]
-      );
-    }
-  }, [events, router.query.eventId]);
-
-  // handle filter changes
-  useEffect(() => {
-    if (events) {
-      setLocalEvents(
-        events.filter((e) => filters?.includes(e.event_type)) || []
-      );
-    }
-  }, [events, filters]);
-
-  return (
-    <main className={`flex flex-col items-center justify-between p-24`}>
-      <ul className="space-y-8">
-        {selectedEvent && (
-          <Modal
-            isOpen={!!router.query.eventId}
-            onClose={() => router.push("/events-public")}
-          >
-            <EventsCardFull
-              event={selectedEvent}
-              eventsMap={eventsMap}
-              onClose={() => router.push("/events-public")}
-            />
-          </Modal>
-        )}
-        <div className="flex flex-col md:flex-row w-full gap-4">
-          <div className="w-1/2">
-            <SearchBar
-              setSearchQuery={setSearchQuery}
-              handleSearch={handleSearch}
-              searchQuery={searchQuery}
-              resetSearch={() => {
-                setLocalEvents(events);
-              }}
-            />
-          </div>
-          <div className="w-1/2">
-            <FilterAccordion filters={filters} setFilters={setFilters} />
-          </div>
-        </div>
-        {localEvents &&
-          eventsMap &&
-          localEvents.map((event, i) => (
-            <li key={`${event.id}-${i}`}>
-              <EventsCard event={event} />
-            </li>
-          ))}
-      </ul>
-    </main>
-  );
+  return <EventsList events={events} eventsMap={eventsMap} />
 }
 
 EventsPublic.getLayout = function getLayout(page: ReactElement) {
