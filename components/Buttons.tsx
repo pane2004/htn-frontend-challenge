@@ -8,6 +8,7 @@ import { MdCheck, MdExpandLess, MdExpandMore } from "react-icons/md";
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   disabled?: boolean;
+  selected?: boolean;
   children?: React.ReactNode;
 }
 
@@ -26,16 +27,17 @@ export function Button({ label, children, ...props }: ButtonProps) {
 export function NavButton({
   label,
   disabled,
+  selected,
   children,
   ...props
 }: ButtonProps) {
   return (
     <button
-      className={`flex w-full items-center p-2 group ${
+      className={`flex w-full items-center p-4 group ${
         disabled
           ? "text-gray-500 cursor-default"
           : "text-white hover:bg-gray-700"
-      }`}
+      } ${selected ? "bg-gray-700" : ""}`}
       {...props}
     >
       {children}

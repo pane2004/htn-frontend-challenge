@@ -78,9 +78,15 @@ export function DashboardLayout({
                 <li>
                   <NavButton
                     onClick={() => {
-                      router.push(isPublic ? "/events-public" : "/events-private");
+                      router.push(
+                        isPublic ? "/events-public" : "/events-private"
+                      );
                     }}
                     label="Events"
+                    selected={
+                      router.asPath === "/events-public" ||
+                      router.asPath === "/events-private"
+                    }
                   >
                     <MdDashboard size={32} />
                   </NavButton>
@@ -92,6 +98,7 @@ export function DashboardLayout({
                     }}
                     label="My Events"
                     disabled={isPublic}
+                    selected={router.asPath === "/events-private/mine"}
                   >
                     <MdAccountCircle size={32} />
                   </NavButton>
