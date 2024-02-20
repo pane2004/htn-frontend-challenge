@@ -33,3 +33,14 @@ export function processPublicEvents(events: TEvent[]): TEvent[] {
 
   return processedEvents;
 }
+
+// a basic client based search function
+export function searchEvents(events: TEvent[], query: string) {
+  const lowerCaseQuery = query.toLowerCase();
+  return events.filter(
+    (event) =>
+      event.name.toLowerCase().includes(lowerCaseQuery) ||
+      (event?.description &&
+        event?.description.toLowerCase().includes(lowerCaseQuery))
+  );
+}
