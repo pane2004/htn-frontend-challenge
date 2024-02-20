@@ -160,7 +160,7 @@ export function EventsCardFull({
             href={isPublic ? event?.public_url ?? "" : event.private_url}
             target="_blank"
           >
-            <Button label="Learn More">
+            <Button label="More">
               <MdOpenInNew size={18} />
             </Button>
           </Link>

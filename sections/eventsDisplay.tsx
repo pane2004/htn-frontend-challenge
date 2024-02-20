@@ -79,7 +79,7 @@ export function EventsList({ events, eventsMap }: EventsProps) {
           </Modal>
         )}
         <div className="flex flex-col md:flex-row w-full gap-4">
-          <div className="w-1/2">
+          <div className="flex-grow">
             <SearchBar
               setSearchQuery={setSearchQuery}
               handleSearch={handleSearch}
@@ -89,7 +89,7 @@ export function EventsList({ events, eventsMap }: EventsProps) {
               }}
             />
           </div>
-          <div className="w-1/2">
+          <div className="flex-grow">
             <FilterAccordion filters={filters} setFilters={setFilters} />
           </div>
         </div>
