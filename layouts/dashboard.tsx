@@ -88,7 +88,7 @@ export function DashboardLayout({
                 <li>
                   <NavButton
                     onClick={() => {
-                      router.push(isPublic ? "" : "/events-private/my");
+                      router.push(isPublic ? "" : "/events-private/mine");
                     }}
                     label="My Events"
                     disabled={isPublic}

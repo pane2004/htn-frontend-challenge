@@ -1,19 +1,26 @@
 import { TEvent } from "@/types/events";
 import { H2, H3 } from "@/components/Text";
-import { MdClose, MdOpenInNew } from "react-icons/md";
+import {
+  MdClose,
+  MdFavorite,
+  MdFavoriteBorder,
+  MdOpenInNew,
+} from "react-icons/md";
 import Link from "next/link";
 import { formatTimestampRange, formatTimestampToDate } from "@/utils/time";
 import { Button } from "./Buttons";
 import { useRouter } from "next/router";
+import { useSavedEvents } from "@/hooks/useSavedEvents";
 
 interface EventsCardProps {
   event: TEvent;
   isPublic: boolean;
+  mine?: boolean;
 }
 
-export function EventsCard({ event, isPublic }: EventsCardProps) {
+export function EventsCard({ event, isPublic, mine }: EventsCardProps) {
   return (
-    <div className="flex flex-row gap-2 hover:scale-105">
+    <div className={`flex flex-row gap-2 ${mine ? "" : "hover:scale-105"}`}>
       <div className="hidden md:block">
         <div className="flex flex-col text-right">
           <span>{formatTimestampToDate(event.start_time)}</span>
@@ -25,10 +32,14 @@ export function EventsCard({ event, isPublic }: EventsCardProps) {
       <div className="hidden md:block w-4 border-l-2 border-t-2 border-b-2 border-white mr-1" />
 
       <Link
-        href={`/${isPublic ? "events-public" : "events-private"}/?eventId=${
-          event.id
-        }`}
-        className="flex-grow border-2 border-white max-w-2xl bg-gradient-to-r from-blue-600/10 to-cyan-500/10"
+        href={
+          mine
+            ? ""
+            : `/${isPublic ? "events-public" : "events-private"}/?eventId=${
+                event.id
+              }`
+        }
+        className={`flex-grow border-2 border-white max-w-2xl bg-gradient-to-r from-blue-600/10 to-cyan-500/10 ${mine ? "cursor-default" : ""}`}
       >
         <div className="flex justify-end items-center h-8 pr-2 space-x-2 border-b-2 border-white bg-gradient-to-r from-blue-600 to-cyan-500">
           <div className="w-4 h-4 bg-gray-300 border-2 border-white" />
@@ -83,6 +94,7 @@ export function EventsCardFull({
   onClose,
 }: FullEventCardProps) {
   const router = useRouter();
+  const { saveEvent, unsaveEvent, isEventSaved } = useSavedEvents();
 
   return (
     <div className="flex-grow border-2 border-white max-w-2xl bg-black bg-gradient-to-r from-blue-600/20 to-cyan-500/20">
@@ -143,7 +155,7 @@ export function EventsCardFull({
             </div>
           </div>
         )}
-        <div>
+        <div className="flex flex-row items-center gap-2">
           <Link
             href={isPublic ? event?.public_url ?? "" : event.private_url}
             target="_blank"
@@ -152,6 +164,22 @@ export function EventsCardFull({
               <MdOpenInNew size={18} />
             </Button>
           </Link>
+          {!isPublic && (
+            <Button
+              label="Save"
+              onClick={() => {
+                isEventSaved(event.id)
+                  ? unsaveEvent(event.id)
+                  : saveEvent(event.id);
+              }}
+            >
+              {isEventSaved(event.id) ? (
+                <MdFavorite size={18} />
+              ) : (
+                <MdFavoriteBorder size={18} />
+              )}
+            </Button>
+          )}
         </div>
       </div>
     </div>

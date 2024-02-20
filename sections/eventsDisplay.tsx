@@ -22,6 +22,12 @@ export function EventsList({ events, eventsMap }: EventsProps) {
     }
     return false;
   }, [router.asPath]);
+  const isMine: boolean = useMemo(() => {
+    if (router.asPath) {
+      return router.asPath.includes("mine");
+    }
+    return false;
+  }, [router.asPath]);
 
   const handleSearch = () => {
     if (localEvents) {
@@ -51,8 +57,6 @@ export function EventsList({ events, eventsMap }: EventsProps) {
       );
     }
   }, [filters]);
-
-  console.log(events);
 
   return (
     <main className={`flex flex-col items-center justify-between p-24`}>
@@ -93,7 +97,7 @@ export function EventsList({ events, eventsMap }: EventsProps) {
           eventsMap &&
           localEvents.map((event, i) => (
             <li key={`${event.id}-${i}`}>
-              <EventsCard event={event} isPublic={isPublic} />
+              <EventsCard event={event} isPublic={isPublic} mine={isMine} />
             </li>
           ))}
       </ul>

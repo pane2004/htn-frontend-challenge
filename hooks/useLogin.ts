@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { ACCESS_TOKEN } from "@/constants/cookies";
 
 export const useLogin = () => {
   // not very applicable for fake login but normally i would add error and loading states
@@ -13,7 +14,7 @@ export const useLogin = () => {
     if (password !== "password") {
       throw new Error("Invalid Password");
     }
-    Cookies.set("access_token", "ABCDEFG");
+    Cookies.set(ACCESS_TOKEN, "ABCDEFG");
   };
 
   return { loading, login };

@@ -1,4 +1,5 @@
 import { TEvent } from "@/types/events";
+import { GetServerSidePropsContext } from "next";
 
 /* 
 The functions will clean up the events response from the API.
@@ -35,7 +36,9 @@ export function processPublicEvents(events: TEvent[]): TEvent[] {
 }
 
 export function processPrivateEvents(events: TEvent[]): TEvent[] {
-  const processedEvents = [...events].sort((a, b) => a.start_time - b.start_time);
+  const processedEvents = [...events].sort(
+    (a, b) => a.start_time - b.start_time
+  );
 
   return processedEvents;
 }
@@ -50,3 +53,20 @@ export function searchEvents(events: TEvent[], query: string) {
         event?.description.toLowerCase().includes(lowerCaseQuery))
   );
 }
+
+type CookieObject = {
+  [K: string]: string;
+}
+
+// function to parse cookies server-side
+export const parseCookies = (req: GetServerSidePropsContext["req"]) => {
+  const cookie = req.headers.cookie;
+  if (!cookie) return null;
+  return cookie
+    .split(";")
+    .map((v) => v.split("="))
+    .reduce<CookieObject>((acc, v) => {
+      acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+      return acc;
+    }, {});
+};
