@@ -97,7 +97,7 @@ export function EventsList({ events, eventsMap }: EventsProps) {
           eventsMap &&
           localEvents.map((event, i) => (
             <li key={`${event.id}-${i}`}>
-              <EventsCard event={event} isPublic={isPublic} mine={isMine} />
+              <EventsCard event={event} isPublic={isPublic} mine={isMine} setLocalEvents={setLocalEvents}/>
             </li>
           ))}
       </ul>
