@@ -8,11 +8,14 @@ import { Button } from "@/components/Buttons";
 import { TextInput } from "@/components/Input";
 import { H1, H3 } from "@/components/Text";
 import { toErrorWithMessage } from "@/utils/error";
+import { useTranslations } from "next-intl";
 
 const sora = Sora({ subsets: ["latin"] });
 
 export function LoginPage() {
   const router = useRouter();
+  const t = useTranslations("Login");
+
   const { loading, login } = useLogin();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -39,17 +42,17 @@ export function LoginPage() {
       <div className="flex flex-col items-center justify-center w-full space-y-16 z-10">
         <div className="relative flex flex-col items-center space-y-2">
           <StarDecorations />
-          <H1 glow>Events</H1>
+          <H1 glow>{t("title")}</H1>
           <H3>Hackathon Global Inc.™</H3>
         </div>
 
         <form className="w-full max-w-xl" onSubmit={onSubmit}>
           <div className="mb-5">
             <TextInput
-              heading="Email"
+              heading={t("email")}
               type="email"
               id="email"
-              placeholder="name@email.com"
+              placeholder={t("email_placeholder")}
               required
               value={email}
               onChange={(e) => {
@@ -60,10 +63,10 @@ export function LoginPage() {
           </div>
           <div className="mb-5">
             <TextInput
-              heading="Password"
+              heading={t("password")}
               type="password"
               id="password"
-              placeholder="password"
+              placeholder={t("password_placeholder")}
               required
               value={password}
               onChange={(e) => {
@@ -76,9 +79,9 @@ export function LoginPage() {
             <div className="mb-4 text-center text-red-500">{errorMessage}</div>
           )}
           <div className="flex md:flex-row flex-col gap-4">
-            <Button label="Sign In" type="submit" />
+            <Button label={t("sign_in")} type="submit" />
             <Button
-              label="Continue as Guest"
+              label={t("guest")}
               type="button"
               className="text-white hover:brightness-75"
               onClick={() => {

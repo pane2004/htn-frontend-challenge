@@ -1,0 +1,11 @@
+{
+  "Login": {
+    "title": "Événements",
+    "email": "E-mail",
+    "email_placeholder": "nom@exemple.com",
+    "password": "Mot de passe",
+    "password_placeholder": "motdepasse",
+    "sign_in": "Se connecter",
+    "guest": "Continuer en tant qu'invité"
+  }
+}
