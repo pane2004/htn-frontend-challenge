@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
 
@@ -14,13 +15,14 @@ export function SearchBar({
   resetSearch,
   searchQuery,
 }: SearchBarProps) {
+  const t = useTranslations("SearchBar");
   const [searched, setSearched] = useState<boolean>(false);
 
   return (
     <div className="w-full p-2 flex border border-1 border-white flex-row items-center justify-between bg-gray-800">
       <input
         className="bg-transparent text-white placeholder-gray-400 outline-none w-full"
-        placeholder="Search..."
+        placeholder={t("search")}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         onKeyDown={(e) => {

@@ -11,6 +11,7 @@ import { formatTimestampRange, formatTimestampToDate } from "@/utils/time";
 import { Button } from "./Buttons";
 import { useRouter } from "next/router";
 import { useSavedEvents } from "@/hooks/useSavedEvents";
+import { useTranslations } from "next-intl";
 
 interface EventsCardProps {
   event: TEvent;
@@ -21,6 +22,7 @@ interface EventsCardProps {
 
 export function EventsCard({ event, isPublic, mine, setLocalEvents }: EventsCardProps) {
   const { unsaveEvent } = useSavedEvents();
+  const t = useTranslations("Cards");
 
   const UnsaveEventAction = async () => {
     await unsaveEvent(event.id);
@@ -58,7 +60,7 @@ export function EventsCard({ event, isPublic, mine, setLocalEvents }: EventsCard
             <H3>{event.name}</H3>
             {event.speakers.length > 0 && (
               <div className="flex flex-row items-center gap-1 inline-block">
-                <span>By:</span>
+                <span>{t("by")}</span>
                 <ul>
                   {event.speakers.map((speaker, j) => (
                     <li
@@ -80,7 +82,7 @@ export function EventsCard({ event, isPublic, mine, setLocalEvents }: EventsCard
           </div>
           <span className="line-clamp-3">{event.description}</span>
           {mine && <Button
-            label="Unsave"
+            label={t("unsave")}
             onClick={UnsaveEventAction}
           >
             <MdFavorite size={18} />
@@ -108,6 +110,7 @@ export function EventsCardFull({
 }: FullEventCardProps) {
   const router = useRouter();
   const { saveEvent, unsaveEvent, isEventSaved } = useSavedEvents();
+  const t = useTranslations("Cards");
 
   return (
     <div className="flex-grow border-2 border-white max-w-2xl bg-black bg-gradient-to-r from-blue-600/20 to-cyan-500/20">
@@ -126,7 +129,7 @@ export function EventsCardFull({
           <H2>{event.name}</H2>
           {event.speakers.length > 0 && (
             <div className="flex flex-row items-center gap-2 inline-block">
-              <H3>By:</H3>
+              <H3>{t("by")}</H3>
               <ul>
                 {event.speakers.map((speaker, j) => (
                   <li
@@ -149,7 +152,7 @@ export function EventsCardFull({
         </div>
         {event.related_events.length > 0 && (
           <div className="space-y-2">
-            <H3>Related</H3>
+            <H3>{t("related")}</H3>
             <div className="flex flew-row flex-wrap text-nowrap gap-2">
               {event.related_events.map((id) => (
                 <button
@@ -173,13 +176,13 @@ export function EventsCardFull({
             href={isPublic ? event?.public_url ?? "" : event.private_url}
             target="_blank"
           >
-            <Button label="More">
+            <Button label={t("more")}>
               <MdOpenInNew size={18} />
             </Button>
           </Link>
           {!isPublic && (
             <Button
-              label="Save"
+              label={t("save")}
               onClick={() => {
                 isEventSaved(event.id)
                   ? unsaveEvent(event.id)

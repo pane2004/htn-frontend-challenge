@@ -1,0 +1,33 @@
+{
+  "Login": {
+    "title": "Events",
+    "email": "Email",
+    "email_placeholder": "name@email.com",
+    "password": "Password",
+    "password_placeholder": "password",
+    "sign_in": "Sign In",
+    "guest": "Continue as Guest"
+  },
+  "Filter": {
+    "filters": "Filters",
+    "workshop": "Workshop",
+    "tech_talk": "Tech Talk",
+    "activity": "Activity"
+  },
+  "SearchBar": {
+    "search": "Search..."
+  },
+  "Dashboard": {
+    "heading": "Events",
+    "menuEvents": "Events",
+    "menuMyEvents": "My Events",
+    "logOut": "Log Out"
+  },
+  "Cards": {
+    "by": "By:",
+    "more": "More",
+    "save": "Save",
+    "unsave": "Unsave",
+    "related": "Related"
+  }
+}

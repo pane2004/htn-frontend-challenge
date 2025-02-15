@@ -1,0 +1,33 @@
+{
+  "Login": {
+    "title": "活动",
+    "email": "电子邮件",
+    "email_placeholder": "name@email.com",
+    "password": "密码",
+    "password_placeholder": "密码",
+    "sign_in": "登录",
+    "guest": "以访客身份继续"
+  },
+  "Filter": {
+    "filters": "筛选器",
+    "workshop": "研讨会",
+    "tech_talk": "技术讲座",
+    "activity": "活动"
+  },
+  "SearchBar": {
+    "search": "搜索..."
+  },
+  "Dashboard": {
+    "heading": "活动",
+    "menuEvents": "活动",
+    "menuMyEvents": "我的活动",
+    "logOut": "登出"
+  },
+  "Cards": {
+    "by": "由：",
+    "more": "更多",
+    "save": "保存",
+    "unsave": "取消保存",
+    "related": "相关"
+  }
+}

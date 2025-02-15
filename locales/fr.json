@@ -1,0 +1,33 @@
+{
+  "Login": {
+    "title": "Événements",
+    "email": "Email",
+    "email_placeholder": "nom@email.com",
+    "password": "Mot de passe",
+    "password_placeholder": "mot de passe",
+    "sign_in": "Se connecter",
+    "guest": "Continuer en tant qu'invité"
+  },
+  "Filter": {
+    "filters": "Filtres",
+    "workshop": "Atelier",
+    "tech_talk": "Conférence technique",
+    "activity": "Activité"
+  },
+  "SearchBar": {
+    "search": "Rechercher..."
+  },
+  "Dashboard": {
+    "heading": "Événements",
+    "menuEvents": "Événements",
+    "menuMyEvents": "Mes événements",
+    "logOut": "Se déconnecter"
+  },
+  "Cards": {
+    "by": "Par :",
+    "more": "Plus",
+    "save": "Enregistrer",
+    "unsave": "Annuler l'enregistrement",
+    "related": "Connexe"
+  }
+}

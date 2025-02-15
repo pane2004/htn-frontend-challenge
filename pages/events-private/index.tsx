@@ -5,6 +5,7 @@ import { EventsProps, TEvent } from "@/types/events";
 import { processPrivateEvents } from "@/utils/eventClean";
 import { DashboardLayout } from "@/layouts/dashboard";
 import { EventsList } from "@/sections/eventsDisplay";
+import { GetServerSidePropsContext } from "next";
 
 export default function EventsPrivate({ events, eventsMap }: EventsProps) {
   return <EventsList events={events} eventsMap={eventsMap} />;
@@ -14,7 +15,7 @@ EventsPrivate.getLayout = function getLayout(page: ReactElement) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ locale }: GetServerSidePropsContext) {
   const client = createApolloClient();
   const { data } = await client.query<{ sampleEvents: TEvent[] }>({
     query: gql`
@@ -47,6 +48,7 @@ export async function getServerSideProps() {
     props: {
       events: processedEvents,
       eventsMap: eventsMap,
+      messages: (await import(`@/locales/${locale}`)).default
     },
   };
 }

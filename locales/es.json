@@ -1,0 +1,33 @@
+{
+  "Login": {
+    "title": "Eventos",
+    "email": "Correo electrónico",
+    "email_placeholder": "nombre@email.com",
+    "password": "Contraseña",
+    "password_placeholder": "contraseña",
+    "sign_in": "Iniciar sesión",
+    "guest": "Continuar como invitado"
+  },
+  "Filter": {
+    "filters": "Filtros",
+    "workshop": "Taller",
+    "tech_talk": "Charla técnica",
+    "activity": "Actividad"
+  },
+  "SearchBar": {
+    "search": "Buscar..."
+  },
+  "Dashboard": {
+    "heading": "Eventos",
+    "menuEvents": "Eventos",
+    "menuMyEvents": "Mis eventos",
+    "logOut": "Cerrar sesión"
+  },
+  "Cards": {
+    "by": "Por:",
+    "more": "Más",
+    "save": "Guardar",
+    "unsave": "Cancelar guardar",
+    "related": "Relacionado"
+  }
+}
