@@ -84,6 +84,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     props: {
       events: processedEvents,
       eventsMap: eventsMap,
+      messages: (await import(`@/locales/${context.locale}`)).default
     },
   };
 }

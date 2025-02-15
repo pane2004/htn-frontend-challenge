@@ -1,6 +1,7 @@
 import { NavButton } from "@/components/Buttons";
 import { H1, H2, H3 } from "@/components/Text";
 import { useLogout } from "@/hooks/useLogout";
+import { useTranslations } from "next-intl";
 import { Sora } from "next/font/google";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
@@ -17,6 +18,7 @@ const sora = Sora({ subsets: ["latin"] });
 export function DashboardLayout({
   children,
 }: React.HTMLAttributes<HTMLBodyElement>) {
+  const t = useTranslations('Dashboard');
   const [menu, setMenu] = useState(false);
   const router = useRouter();
   const { loading, error, logout } = useLogout();
@@ -52,9 +54,8 @@ export function DashboardLayout({
       </button>
       <div className="grid grid-cols-12 gap-8 min-h-screen">
         <aside
-          className={`${
-            menu ? "fixed inset-y-0 left-0 z-40 w-64" : "hidden"
-          } sm:relative sm:block sm:col-span-3 overflow-y-auto border-r-2 border-gray-500 transform-none`}
+          className={`${menu ? "fixed inset-y-0 left-0 z-40 w-64" : "hidden"
+            } sm:relative sm:block sm:col-span-3 overflow-y-auto border-r-2 border-gray-500 transform-none`}
           aria-label="Sidebar"
         >
           <div className="relative h-full flex flex-col bg-gray-900 overflow-y-auto">
@@ -71,7 +72,7 @@ export function DashboardLayout({
             )}
             <div className="flex-grow px-3 py-4 space-y-10">
               <div className="p-4">
-                <H2 glow>Events</H2>
+                <H2 glow>{t("heading")}</H2>
                 <H3>Hackathon Global Inc.™</H3>
               </div>
               <ul className="space-y-2 font-medium">
@@ -82,7 +83,7 @@ export function DashboardLayout({
                         isPublic ? "/events-public" : "/events-private"
                       );
                     }}
-                    label="Events"
+                    label={t("menuEvents")}
                     selected={
                       router.asPath === "/events-public" ||
                       router.asPath === "/events-private"
@@ -96,7 +97,7 @@ export function DashboardLayout({
                     onClick={() => {
                       router.push(isPublic ? "" : "/events-private/mine");
                     }}
-                    label="My Events"
+                    label={t("menuMyEvents")}
                     disabled={isPublic}
                     selected={router.asPath === "/events-private/mine"}
                   >
@@ -111,10 +112,10 @@ export function DashboardLayout({
                   isPublic
                     ? router.push("/")
                     : // technically should catch and deal wih logout error
-                      // but for sake of brevity lets skip it
-                      logout().then(() => router.push("/"));
+                    // but for sake of brevity lets skip it
+                    logout().then(() => router.push("/"));
                 }}
-                label="Log Out"
+                label={t("logOut")}
               >
                 <MdLogout size={32} />
               </NavButton>
@@ -122,9 +123,8 @@ export function DashboardLayout({
           </div>
         </aside>
         <div
-          className={`${
-            menu ? "col-span-12" : "sm:col-span-9 col-span-12"
-          } max-h-screen overflow-y-auto`}
+          className={`${menu ? "col-span-12" : "sm:col-span-9 col-span-12"
+            } max-h-screen overflow-y-auto`}
         >
           {children}
         </div>

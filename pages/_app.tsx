@@ -18,12 +18,11 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page)
   const router = useRouter();
 
-  return getLayout(
-    <NextIntlClientProvider locale={router.locale}
-      timeZone="America/Toronto"
-      messages={pageProps.messages}
-    >
-      <Component {...pageProps} />
-    </NextIntlClientProvider>
-  );
+  return (
+  <NextIntlClientProvider locale={router.locale}
+    timeZone="America/Toronto"
+    messages={pageProps.messages}
+  >
+    {getLayout(<Component {...pageProps} />)}
+  </NextIntlClientProvider>);
 }

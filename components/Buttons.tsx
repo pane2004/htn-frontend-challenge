@@ -1,7 +1,6 @@
 import { EVENT_TYPES } from "@/constants/filters";
 import { TEventType } from "@/types/events";
-import { eventTypeToString } from "@/utils/converters";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { SetStateAction, useState } from "react";
 import { MdCheck, MdExpandLess, MdExpandMore } from "react-icons/md";
 
@@ -33,11 +32,10 @@ export function NavButton({
 }: ButtonProps) {
   return (
     <button
-      className={`flex w-full items-center p-4 group ${
-        disabled
+      className={`flex w-full items-center p-4 group ${disabled
           ? "text-gray-500 cursor-default"
           : "text-white hover:bg-gray-700"
-      } ${selected ? "bg-gray-700" : ""}`}
+        } ${selected ? "bg-gray-700" : ""}`}
       {...props}
     >
       {children}
@@ -53,6 +51,7 @@ interface FiltersProps {
 
 export function FilterAccordion({ filters, setFilters }: FiltersProps) {
   const [openAccordion, setOpenAccordion] = useState<boolean>(false);
+  const t = useTranslations("Filter");
 
   return (
     <div className="w-full">
@@ -60,7 +59,7 @@ export function FilterAccordion({ filters, setFilters }: FiltersProps) {
         className="w-full p-2 flex border border-1 border-white flex-row items-center justify-between bg-gray-900"
         onClick={() => setOpenAccordion(!openAccordion)}
       >
-        <span className="text-left">Filters</span>
+        <span className="text-left">{t("filters")}</span>
         {openAccordion ? (
           <MdExpandLess size={32} />
         ) : (
@@ -72,9 +71,8 @@ export function FilterAccordion({ filters, setFilters }: FiltersProps) {
           {EVENT_TYPES.map((type) => (
             <button
               key={type}
-              className={`flex flex-row items-center p-2 gap-2 border border-1 border-gray-200 text-xs text-center bg-gradient-to-r from-fuchsia-500 to-orange-500 ${
-                filters?.includes(type) ? "brightness-100" : "brightness-75"
-              } hover:brightness-100`}
+              className={`flex flex-row items-center p-2 gap-2 border border-1 border-gray-200 text-xs text-center bg-gradient-to-r from-fuchsia-500 to-orange-500 ${filters?.includes(type) ? "brightness-100" : "brightness-75"
+                } hover:brightness-100`}
               onClick={() => {
                 setFilters((prevFilters) => {
                   if (prevFilters && prevFilters.includes(type)) {
@@ -86,7 +84,7 @@ export function FilterAccordion({ filters, setFilters }: FiltersProps) {
               }}
             >
               {filters?.includes(type) && <MdCheck size={18} />}
-              {eventTypeToString[type]}
+              {t(type)}
             </button>
           ))}
         </div>
