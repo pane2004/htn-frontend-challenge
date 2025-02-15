@@ -16,9 +16,17 @@ interface EventsCardProps {
   event: TEvent;
   isPublic: boolean;
   mine?: boolean;
+  setLocalEvents: React.Dispatch<React.SetStateAction<TEvent[] | undefined>>;
 }
 
-export function EventsCard({ event, isPublic, mine }: EventsCardProps) {
+export function EventsCard({ event, isPublic, mine, setLocalEvents }: EventsCardProps) {
+  const { unsaveEvent } = useSavedEvents();
+
+  const UnsaveEventAction = async () => {
+    await unsaveEvent(event.id);
+    setLocalEvents(prev => (prev && prev.filter(e => e.id != event.id)));
+  }
+
   return (
     <div className={`flex flex-row gap-2 ${mine ? "" : "hover:scale-105"}`}>
       <div className="hidden md:block">
@@ -35,9 +43,8 @@ export function EventsCard({ event, isPublic, mine }: EventsCardProps) {
         href={
           mine
             ? ""
-            : `/${isPublic ? "events-public" : "events-private"}/?eventId=${
-                event.id
-              }`
+            : `/${isPublic ? "events-public" : "events-private"}/?eventId=${event.id
+            }`
         }
         className={`flex-grow border-2 border-white max-w-2xl bg-gradient-to-r from-blue-600/10 to-cyan-500/10 ${mine ? "cursor-default" : ""}`}
       >
@@ -72,6 +79,12 @@ export function EventsCard({ event, isPublic, mine }: EventsCardProps) {
             </span>
           </div>
           <span className="line-clamp-3">{event.description}</span>
+          {mine && <Button
+            label="Unsave"
+            onClick={UnsaveEventAction}
+          >
+            <MdFavorite size={18} />
+          </Button>}
         </div>
       </Link>
     </div>
